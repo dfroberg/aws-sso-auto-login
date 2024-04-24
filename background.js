@@ -65,6 +65,21 @@ function checkAndLogin(tabId) {
                 }
             }
         }
+        
+        const isNewUserAllowDataPage = currentURL.includes('awsapps.com') && currentURL.includes('start');
+        if (isNewUserAllowDataPage) {
+            // Get all buttons on the page
+            const buttons = document.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+                // If the button's text content is 'Allow', click it
+                if (buttons[i].textContent === 'Allow') {
+                    buttons[i].click();
+                    console.log('Clicked on Allow button');
+                    chrome.runtime.sendMessage({ action: 'closeTab', tabId: tabId });
+                    break;
+                }
+            }
+        }
         // console.log('No action required.');
         // // list the ids of all buttons on the page
         // const buttons = document.getElementsByTagName('button');
